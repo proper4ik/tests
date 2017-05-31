@@ -1,0 +1,24 @@
+var ScWebPage = require("./page_object/ScWebPage")
+var ScnPage = require("./page_object/ScnEditorPage")
+
+describe("SCn test", function() {
+    console.log(ScWebPage);
+
+    var scWebPage = new ScWebPage();
+
+    beforeEach(function() {
+        browser.get("http://localhost:8000");
+        scWebPage.waitForScWebIsLoaded();
+    });
+
+    it('Naming', function() {
+        var scnPage = new ScnPage(scWebPage.getActiveWindowId());
+	scWebPage.openScnEditor();
+        scnPage.waitForScLinksIsResolved();
+        scnPage.clickSet();
+        scnPage.set1Button();
+       var elements = scnPage.editorSCnKeyword();
+        expect(elements.count()).toEqual(1);
+    });
+
+});
